@@ -9,6 +9,8 @@ namespace learn_Pokemon_Review_App.Helper
         public MappingProfiles()
         {
             CreateMap<Pokemon, PokemonDto>();
+            CreateMap<Category, CategoryDto>();
+            //CreateMap<Country, CountryDto>();
         }
     }
 }
