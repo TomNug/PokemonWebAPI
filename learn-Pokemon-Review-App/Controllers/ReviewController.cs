@@ -57,7 +57,7 @@ namespace learn_Pokemon_Review_App.Controllers
             var reviews = _mapper.Map<List<ReviewDto>>(
                 _reviewRepository.GetReviewsOfAPokemon(pokeId));
             if (!ModelState.IsValid)
-                return BadRequest(ModelState)
+                return BadRequest(ModelState);
             return Ok(reviews);
         }
 

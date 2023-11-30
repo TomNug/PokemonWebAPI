@@ -53,7 +53,7 @@ namespace learn_Pokemon_Review_App.Controllers
         {
             if (!_reviewerRepository.ReviewerExists(reviewerId))
                 return NotFound();
-            var reviews = _mapper.Map<List<ReviewerDto>>(_reviewerRepository.GetReviewsByReviewer(reviewerId));
+            var reviews = _mapper.Map<List<ReviewDto>>(_reviewerRepository.GetReviewsByReviewer(reviewerId));
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
