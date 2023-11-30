@@ -2,6 +2,7 @@
 using learn_Pokemon_Review_App.Data;
 using learn_Pokemon_Review_App.Interfaces;
 using learn_Pokemon_Review_App.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace learn_Pokemon_Review_App.Repositories
 {
@@ -18,7 +19,9 @@ namespace learn_Pokemon_Review_App.Repositories
         public Reviewer GetReviewer(int reviewerId)
         {
             return _context.Reviewers.Where(
-                r => r.Id == reviewerId).FirstOrDefault();
+                r => r.Id == reviewerId).
+                Include(e => e.Reviews).
+                FirstOrDefault();
         }
 
         public ICollection<Reviewer> GetReviewers()
