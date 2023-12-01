@@ -58,5 +58,43 @@ namespace learn_Pokemon_Review_App.Controllers
                 return BadRequest();
             return Ok(rating);
         }
+
+
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreatePokemon([FromQuery] int ownerId, [FromQuery] int categoryId, [FromBody] PokemonDto pokemonCreate)
+        {
+            if (pokemonCreate == null)
+                return BadRequest(ModelState);
+
+            // Check if a pokemon already exists
+            var pokemons = _pokemonRepository.GetPokemons()
+                .Where(p => p.Name.Trim().ToUpper() == pokemonCreate.Name.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if (pokemons != null)
+            {
+                ModelState.AddModelError("", "Pokemon already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // AutoMapper is effective at changing types
+            var pokemonMap = _mapper.Map<Pokemon>(pokemonCreate);
+
+            if (!_pokemonRepository.CreatePokemon(ownerId, categoryId, pokemonMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Successfully created Pokemon");
+        }
+
+
+
     }
 }
