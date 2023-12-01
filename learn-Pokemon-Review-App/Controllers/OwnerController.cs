@@ -76,7 +76,7 @@ namespace learn_Pokemon_Review_App.Controllers
             if (ownerCreate == null)
                 return BadRequest(ModelState);
 
-            // Check if a country already exists
+            // Check if a owner already exists
             var owner = _ownerRepository.GetOwners()
                 .Where(o => o.LastName.Trim().ToUpper() == ownerCreate.LastName.TrimEnd().ToUpper())
                 .FirstOrDefault();
