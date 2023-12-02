@@ -16,6 +16,13 @@ namespace learn_Pokemon_Review_App.Repositories
             _context = context;
             _mapper = mapper;
         }
+
+        public bool CreateReviewer(Reviewer reviewer)
+        {
+            _context.Add(reviewer);
+            return Save();
+        }
+
         public Reviewer GetReviewer(int reviewerId)
         {
             return _context.Reviewers.Where(
@@ -38,6 +45,12 @@ namespace learn_Pokemon_Review_App.Repositories
         public bool ReviewerExists(int reviewerId)
         {
             return _context.Reviewers.Any(r => r.Id == reviewerId);
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }
